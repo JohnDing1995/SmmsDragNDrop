@@ -21,7 +21,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         this.primaryStage = primaryStage;
         this.root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        this.primaryStage.setTitle("Hello World");
+        this.primaryStage.setTitle("SMMS Drag n Drop");
 
         this.primaryStage.setScene(this.scene =  new Scene(root, 720, 410));
         this.primaryStage.show();
