@@ -10,7 +10,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<GridPane alignment="center" hgap="10" prefHeight="400.0" prefWidth="720.0" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="indi.ruiyangding.smmstool.Controller">
+<GridPane alignment="center" hgap="10" prefHeight="420.0" prefWidth="718.0" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="indi.ruiyangding.smmstool.Controller">
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
@@ -28,7 +28,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="imagesTable" layoutX="14.0" layoutY="14.0" onDragDropped="#fileDropped" onDragEntered="#fileDragDetected" onDragOver="#fileDraggedOver" prefHeight="339.0" prefWidth="403.0">
+                        <TableView fx:id="imagesTable" layoutX="14.0" layoutY="14.0" onDragDropped="#fileDropped" onDragEntered="#fileDragDetected" onDragOver="#fileDraggedOver" prefHeight="291.0" prefWidth="405.0">
                            <columns>
                               <TableColumn fx:id="name" prefWidth="75.0" text="File Name" />
                               <TableColumn fx:id="url" prefWidth="75.0" text="URL" />
@@ -45,6 +45,7 @@
                               </TextArea>
                            </children>
                         </Pane>
+                        <Button layoutX="28.0" layoutY="320.0" mnemonicParsing="false" onMouseReleased="#cleanList" text="Clean List" />
                      </children>
                   </AnchorPane>
             </content>

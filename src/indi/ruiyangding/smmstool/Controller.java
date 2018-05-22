@@ -107,7 +107,7 @@ public class Controller implements Initializable {
         Dragboard db = event.getDragboard();
         if (db.hasFiles()) {
             event.setDropCompleted(true);
-            //event.consume();
+            event.consume();
             String filePath = null;
 
             for (File file : db.getFiles()) {
@@ -141,6 +141,13 @@ public class Controller implements Initializable {
             event.consume();
         }
 
+    }
+
+    @FXML
+    private void cleanList(){
+        tableData.clear();
+        imageReturns.clear();
+        imageInfo.clear();
     }
 
 
