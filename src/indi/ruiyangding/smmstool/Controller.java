@@ -4,6 +4,7 @@ import indi.ruiyangding.smmstool.model.ImageTableData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -11,14 +12,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
-import sun.jvm.hotspot.runtime.Threads;
 
 
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.*;
@@ -27,8 +27,8 @@ import java.util.concurrent.*;
 public class Controller implements Initializable {
 
 
-    @FXML
-    private ProgressBar uploadProgress;
+    //@FXML
+    //private ProgressBar uploadProgress;
 
 
     //private List<Runnable> uploads = new ArrayList<>();
@@ -37,6 +37,7 @@ public class Controller implements Initializable {
 
     private List<ImageInfo> imageInfo = new ArrayList<>();
     private final ObservableList<ImageTableData> tableData = FXCollections.observableArrayList();
+    private List<Future<ImageInfo>> imageReturns = new ArrayList<>();
 
     @FXML
     private TableView<ImageTableData> imagesTable;
@@ -46,6 +47,18 @@ public class Controller implements Initializable {
     private TableColumn<ImageTableData, String> url;
     @FXML
     private TableColumn<ImageTableData, String> success;
+
+    @FXML
+    private TextArea imageCode;
+
+    @FXML
+    private ImageView thisImage;
+
+    private ExecutorService executor = Executors.newCachedThreadPool();
+
+    public Controller() {
+    }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -58,16 +71,32 @@ public class Controller implements Initializable {
         success.setCellValueFactory(
                 new PropertyValueFactory<ImageTableData, String>("success")
         );
+        name.setPrefWidth(90);
+        url.setPrefWidth(240);
+        success.setPrefWidth(70);
         imagesTable.setEditable(false);
         imagesTable.setItems(tableData);
     }
 
+    @FXML
+    private void fileDragDetected(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasFiles()) {
+            String filePath = null;
+
+            for (File file : db.getFiles()) {
+                filePath = file.getAbsolutePath();
+                tableData.add(new ImageTableData(file.getName(), "", "uploading...", filePath));
+            }
+        }
+    }
 
     @FXML
     private void fileDraggedOver(DragEvent event) {
         Dragboard db = event.getDragboard();
         if (db.hasFiles()) {
             event.acceptTransferModes(TransferMode.COPY);
+
         } else {
             event.consume();
         }
@@ -78,36 +107,43 @@ public class Controller implements Initializable {
         Dragboard db = event.getDragboard();
         if (db.hasFiles()) {
             event.setDropCompleted(true);
+            //event.consume();
             String filePath = null;
-            List<Future<ImageInfo>> imageReturns = new ArrayList<>();
+
             for (File file : db.getFiles()) {
                 filePath = file.getAbsolutePath();
-                //upload files, multi-thread
+                //tableData.add(new ImageTableData(file.getName(), "", "uploading...", filePath));
                 UploadSmmsAPI up = new UploadSmmsAPI(filePath);
-                ExecutorService executor = Executors.newCachedThreadPool();
                 imageReturns.add(executor.submit(up));
-                System.out.println("Starting upload " + up.getPath());
+                imagesTable.refresh();
             }
-
-            int index = 0;
+            int index = -1;
             for(Future<ImageInfo> eachImage : imageReturns){
                 index ++;
                 try {
+                    while(!eachImage.isDone());
                     ImageInfo curr = eachImage.get();
                     imageInfo.add(curr);
-                    uploadProgress.setProgress(index);
-                    tableData.add(new ImageTableData(curr.data.filename, curr.data.url, curr.code));
-
-
+                    //uploadProgress.setProgress(index);
+                    tableData.get(index).setSuccess(curr.code);
+                    tableData.get(index).setUrl(curr.data.url);
+                    imagesTable.refresh();
                 } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
+                } finally {
+                    System.out.println("uploaded");
+                    //event.consume();
                 }
             }
+
         } else {
             event.setDropCompleted(false);
+            event.consume();
         }
-        event.consume();
+
     }
+
+
 
 
 }

@@ -6,11 +6,13 @@ public class ImageTableData {
     private final SimpleStringProperty fileName;
     private final SimpleStringProperty url;
     private final SimpleStringProperty success;
+    private final SimpleStringProperty path;
 
-    public ImageTableData(String fName, String u, String s){
+    public ImageTableData(String fName, String u, String s, String p){
         this.fileName = new SimpleStringProperty(fName);
         this.url = new SimpleStringProperty(u);
         this.success = new SimpleStringProperty(s);
+        this.path = new SimpleStringProperty(p);
     }
 
     public String getFileName() {
@@ -43,4 +45,11 @@ public class ImageTableData {
     }
 
 
+    public String getPath() {
+        return path.get();
+    }
+
+    public void setPath(String p) {
+        path.set(p);
+    }
 }

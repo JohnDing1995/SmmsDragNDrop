@@ -22,7 +22,8 @@ public class Main extends Application {
         this.primaryStage = primaryStage;
         this.root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         this.primaryStage.setTitle("Hello World");
-        this.primaryStage.setScene(this.scene =  new Scene(root, 482, 330));
+
+        this.primaryStage.setScene(this.scene =  new Scene(root, 720, 410));
         this.primaryStage.show();
 
     }
