@@ -7,10 +7,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 
 
@@ -75,6 +75,11 @@ public class Controller implements Initializable {
         success.setPrefWidth(70);
         imagesTable.setEditable(false);
         imagesTable.setItems(tableData);
+        imagesTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                onCellSelected(newSelection.getIndex(), newSelection.getUrl());
+            }
+        });
     }
 
     @FXML
@@ -82,10 +87,11 @@ public class Controller implements Initializable {
         Dragboard db = event.getDragboard();
         if (db.hasFiles()) {
             String filePath = null;
-
+            int index = 0;
             for (File file : db.getFiles()) {
                 filePath = file.getAbsolutePath();
-                tableData.add(new ImageTableData(file.getName(), "", "uploading...", filePath));
+                tableData.add(new ImageTableData(file.getName(), "", "uploading...", filePath, index));
+                index ++;
             }
         }
     }
@@ -151,5 +157,11 @@ public class Controller implements Initializable {
         imageInfo.clear();
     }
 
+   private void onCellSelected(int index, String filePath){
+        ImageInfo curr =  imageInfo.get(index);
+        thisImage.setImage(new Image(filePath, true));
+        thisImage.setFitWidth(thisImage.getFitHeight());
+        imageCode.setText("Markdown:" + curr.data.markdown + "\n HTML:" + curr.data.html + "\n URL" + curr.data.url);
+   }
 
 }

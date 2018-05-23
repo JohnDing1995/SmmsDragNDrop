@@ -7,12 +7,14 @@ public class ImageTableData {
     private final SimpleStringProperty url;
     private final SimpleStringProperty success;
     private final SimpleStringProperty path;
+    private final int index;
 
-    public ImageTableData(String fName, String u, String s, String p){
+    public ImageTableData(String fName, String u, String s, String p, int index){
         this.fileName = new SimpleStringProperty(fName);
         this.url = new SimpleStringProperty(u);
         this.success = new SimpleStringProperty(s);
         this.path = new SimpleStringProperty(p);
+        this.index = index;
     }
 
     public String getFileName() {
@@ -51,5 +53,9 @@ public class ImageTableData {
 
     public void setPath(String p) {
         path.set(p);
+    }
+
+    public int getIndex() {
+        return index;
     }
 }

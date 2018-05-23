@@ -12,8 +12,12 @@ Drag img in
 Drop it, and wait it to finish
 ![3.png](https://i.loli.net/2018/05/22/5b03d47cf4065.png)
 
+Select one image to get preview, markdown/html code etc.
+
+![WX20180523-150922@2x.png](https://i.loli.net/2018/05/23/5b05143a6f697.png)
 
 ## TODO
+
 * Generate Markdown and Html etc.
 * Image preview
 
