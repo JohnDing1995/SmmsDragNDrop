@@ -3,8 +3,6 @@ package indi.ruiyangding.smmstool;
 import indi.ruiyangding.smmstool.model.ImageTableData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -73,6 +71,7 @@ public class Controller implements Initializable {
         );
         name.setPrefWidth(90);
         url.setPrefWidth(240);
+        url.setEditable(true);
         success.setPrefWidth(70);
         imagesTable.setEditable(false);
         imagesTable.setItems(tableData);
@@ -123,6 +122,8 @@ public class Controller implements Initializable {
                 try {
                     while(!eachImage.isDone());
                     ImageInfo curr = eachImage.get();
+                    curr.id = index;
+                    curr.data.generateImageCode();
                     imageInfo.add(curr);
                     //uploadProgress.setProgress(index);
                     tableData.get(index).setSuccess(curr.code);
@@ -149,8 +150,6 @@ public class Controller implements Initializable {
         imageReturns.clear();
         imageInfo.clear();
     }
-
-
 
 
 }

@@ -4,5 +4,6 @@ public class ImageInfo {
     ImageInfo(){}
     public String code;
     public ImageData data;
+    public int id;
 
 }

@@ -25,7 +25,6 @@ public class UploadSmmsAPI extends SmmsAPI implements Callable<ImageInfo>{
     private String path;
     private ImageInfo responseInfo;
 
-
     UploadSmmsAPI(String path) {
         this.path = path;
     }
@@ -36,6 +35,7 @@ public class UploadSmmsAPI extends SmmsAPI implements Callable<ImageInfo>{
     public void setPath(String path) {
         this.path = path;
     }
+
 
     @Override
     public boolean sendRequest() {
