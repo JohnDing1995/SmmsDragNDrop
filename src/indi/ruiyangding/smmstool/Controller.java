@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.*;
+import java.util.stream.Collectors;
 
 
 public class Controller implements Initializable {
@@ -53,7 +54,11 @@ public class Controller implements Initializable {
     private TableColumn<ImageTableData, String> success;
 
     @FXML
-    private TextArea imageCode;
+    private TextField urlText;
+    @FXML
+    private TextField htmlCode;
+    @FXML
+    private TextField markdownCode;
 
     @FXML
     private ImageView thisImage;
@@ -117,6 +122,8 @@ public class Controller implements Initializable {
         if (db.hasFiles()) {
 
             for (File file : db.getFiles()) {
+                int fileIndex = currIndex;
+                tableData.add(new ImageTableData(file.getName(), "", "uploading", file.getPath(), fileIndex));
                 //tableData.add(new ImageTableData(file.getName(), "", "uploading...", filePath));
                 Task<ImageInfo> up = new Task<ImageInfo>() {
                     @Override
@@ -125,15 +132,21 @@ public class Controller implements Initializable {
                         api.sendRequest();
                         return api.getResponseInfo();
                     }
+
                 };
                 up.setOnSucceeded(t -> {
                     ImageInfo upReturn = up.getValue();
-                    upReturn.id = currIndex++;
+                    //upReturn.id = currIndex++;
                     imageInfo.add(upReturn);
-                    tableData.add(new ImageTableData(upReturn.data.filename, upReturn.data.url, upReturn.code, upReturn.data.path, upReturn.id));
+                    String fn = file.getName();
+                    tableData.set(findIdByFileName(fn), new ImageTableData(
+                            upReturn.data.filename, upReturn.data.url, upReturn.code, upReturn.data.path, findIdByFileName(fn)
+                    ));
+                    //tableData.add(new ImageTableData(upReturn.data.filename, upReturn.data.url, upReturn.code, upReturn.data.path, upReturn.id));
                 });
                 //Platform.runLater();
                 executor.submit(up);
+                currIndex++;
 
             }
             event.setDropCompleted(true);
@@ -151,12 +164,28 @@ public class Controller implements Initializable {
     }
 
    private void onCellSelected(int index, String filePath){
-       ImageInfo curr = imageInfo.get(index);
-       curr.data.generateImageCode();
-        thisImage.setImage(new Image(filePath, true));
-        thisImage.setFitWidth(thisImage.getFitHeight());
-       imageCode.clear();
-       imageCode.setText("Markdown:" + curr.data.markdown + "\n HTML:" + curr.data.html + "\n URL:" + curr.data.url);
+       if (tableData.get(index).getSuccess().equals("success")) {
+           ImageInfo curr = imageInfo.get(index);
+           curr.data.generateImageCode();
+           thisImage.setImage(new Image(filePath, true));
+           thisImage.setFitWidth(thisImage.getFitHeight());
+           htmlCode.clear();
+           markdownCode.clear();
+           urlText.clear();
+           markdownCode.setText(curr.data.markdown);
+           urlText.setText(curr.data.url);
+           htmlCode.setText(curr.data.html);
+
+       }
+   }
+
+    private int findIdByFileName(String name) {
+        List<ImageTableData> result = tableData.stream()
+                .filter(item -> item.getFileName().equals(name))
+                .collect(Collectors.toList());
+        if (result.size() == 0)
+            System.out.println("size 0");
+        return result.size() == 1 ? result.get(0).getIndex() : -1;
    }
 
 }
