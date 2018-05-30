@@ -1,8 +1,7 @@
 package indi.ruiyangding.smmstool;
 
 
-
-public class HistorySmmsAPI extends SmmsAPI {
+public class HistorySmmsAPI implements SmmsAPI {
     public static String url = "https://sm.ms/api/list";
 
     private int domain;

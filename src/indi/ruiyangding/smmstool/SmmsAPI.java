@@ -1,6 +1,6 @@
 package indi.ruiyangding.smmstool;
 
-public abstract class SmmsAPI {
+public interface SmmsAPI {
 
-    public abstract boolean sendRequest();
+    public boolean sendRequest();
 }

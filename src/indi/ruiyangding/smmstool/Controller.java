@@ -1,8 +1,12 @@
 package indi.ruiyangding.smmstool;
 
 import indi.ruiyangding.smmstool.model.ImageTableData;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -35,7 +39,9 @@ public class Controller implements Initializable {
 
     private List<ImageInfo> imageInfo = new ArrayList<>();
     private final ObservableList<ImageTableData> tableData = FXCollections.observableArrayList();
-    private List<Future<ImageInfo>> imageReturns = new ArrayList<>();
+
+    private Integer currIndex = 0;
+
 
     @FXML
     private TableView<ImageTableData> imagesTable;
@@ -86,13 +92,11 @@ public class Controller implements Initializable {
     private void fileDragDetected(DragEvent event) {
         Dragboard db = event.getDragboard();
         if (db.hasFiles()) {
-            String filePath = null;
-            int index = 0;
-            for (File file : db.getFiles()) {
-                filePath = file.getAbsolutePath();
-                tableData.add(new ImageTableData(file.getName(), "", "uploading...", filePath, index));
-                index ++;
-            }
+//            String filePath = null;
+//            for (File file : db.getFiles()) {
+//                filePath = file.getAbsolutePath();
+//                tableData.add(new ImageTableData(file.getName(), "", "uploading...", filePath, tableData.size()));
+//            }
         }
     }
 
@@ -111,57 +115,48 @@ public class Controller implements Initializable {
     private void fileDropped(DragEvent event) {
         Dragboard db = event.getDragboard();
         if (db.hasFiles()) {
-            event.setDropCompleted(true);
-            event.consume();
-            String filePath = null;
 
             for (File file : db.getFiles()) {
-                filePath = file.getAbsolutePath();
                 //tableData.add(new ImageTableData(file.getName(), "", "uploading...", filePath));
-                UploadSmmsAPI up = new UploadSmmsAPI(filePath);
-                imageReturns.add(executor.submit(up));
-                imagesTable.refresh();
+                Task<ImageInfo> up = new Task<ImageInfo>() {
+                    @Override
+                    protected ImageInfo call() throws Exception {
+                        UploadSmmsAPI api = new UploadSmmsAPI(file.getAbsolutePath());
+                        api.sendRequest();
+                        return api.getResponseInfo();
+                    }
+                };
+                up.setOnSucceeded(t -> {
+                    ImageInfo upReturn = up.getValue();
+                    upReturn.id = currIndex++;
+                    imageInfo.add(upReturn);
+                    tableData.add(new ImageTableData(upReturn.data.filename, upReturn.data.url, upReturn.code, upReturn.data.path, upReturn.id));
+                });
+                //Platform.runLater();
+                executor.submit(up);
+
             }
-            int index = -1;
-            for(Future<ImageInfo> eachImage : imageReturns){
-                index ++;
-                try {
-                    while(!eachImage.isDone());
-                    ImageInfo curr = eachImage.get();
-                    curr.id = index;
-                    curr.data.generateImageCode();
-                    imageInfo.add(curr);
-                    //uploadProgress.setProgress(index);
-                    tableData.get(index).setSuccess(curr.code);
-                    tableData.get(index).setUrl(curr.data.url);
-                    imagesTable.refresh();
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                } finally {
-                    System.out.println("uploaded");
-                    //event.consume();
-                }
-            }
+            event.setDropCompleted(true);
 
         } else {
             event.setDropCompleted(false);
-            event.consume();
         }
-
+        event.consume();
     }
 
     @FXML
     private void cleanList(){
         tableData.clear();
-        imageReturns.clear();
         imageInfo.clear();
     }
 
    private void onCellSelected(int index, String filePath){
-        ImageInfo curr =  imageInfo.get(index);
+       ImageInfo curr = imageInfo.get(index);
+       curr.data.generateImageCode();
         thisImage.setImage(new Image(filePath, true));
         thisImage.setFitWidth(thisImage.getFitHeight());
-        imageCode.setText("Markdown:" + curr.data.markdown + "\n HTML:" + curr.data.html + "\n URL" + curr.data.url);
+       imageCode.clear();
+       imageCode.setText("Markdown:" + curr.data.markdown + "\n HTML:" + curr.data.html + "\n URL:" + curr.data.url);
    }
 
 }

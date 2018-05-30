@@ -1,6 +1,6 @@
 package indi.ruiyangding.smmstool;
 
-public class ClearHistorySmmsAPI extends SmmsAPI{
+public class ClearHistorySmmsAPI implements SmmsAPI {
 
     public static String url = "https://sm.ms/api/upload";
 

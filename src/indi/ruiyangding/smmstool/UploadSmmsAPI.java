@@ -1,5 +1,6 @@
 package indi.ruiyangding.smmstool;
 
+import javafx.concurrent.Task;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.fluent.Response;
@@ -19,7 +20,7 @@ import com.google.gson.Gson;
 import org.apache.http.util.EntityUtils;
 
 
-public class UploadSmmsAPI extends SmmsAPI implements Callable<ImageInfo>{
+public class UploadSmmsAPI implements SmmsAPI {
 
     public static String url = "https://sm.ms/api/upload";
     private String path;
@@ -60,9 +61,7 @@ public class UploadSmmsAPI extends SmmsAPI implements Callable<ImageInfo>{
         return true;
     }
 
-    @Override
-    public ImageInfo call() throws Exception {
-        sendRequest();
+    public ImageInfo getResponseInfo() {
         return responseInfo;
     }
 }
