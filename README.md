@@ -6,17 +6,14 @@
 
 It's simple, 2 steps:
 
-Drag img in
-![2.png](https://i.loli.net/2018/05/22/5b03d47e001a2.png)
+* Drag img in
+* Wait it to be uploaded
 
-Drop it, and wait it to finish
-![3.png](https://i.loli.net/2018/05/22/5b03d47cf4065.png)
+Click images in the table to see details 
 
-Select one image to get preview, markdown/html code etc.
+![WX20180530-222103@2x](/Users/dingruiyang/Projects/SmmsTool/img/WX20180530-222103@2x.png)
 
-![WX20180523-150922@2x.png](https://i.loli.net/2018/05/23/5b05143a6f697.png)
-
-## TODO
+TODO
 
 * Generate Markdown and Html etc.
 * Image preview
