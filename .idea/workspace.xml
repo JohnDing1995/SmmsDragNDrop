@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="readme">
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/SmmsTool/indi/ruiyangding/smmstool/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmmsTool/indi/ruiyangding/smmstool/sample.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/indi/ruiyangding/smmstool/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/indi/ruiyangding/smmstool/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/indi/ruiyangding/smmstool/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/indi/ruiyangding/smmstool/sample.fxml" afterDir="false" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -66,8 +64,8 @@
       <file leaf-file-name="Controller.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/indi/ruiyangding/smmstool/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="530">
-              <caret line="149" column="32" selection-start-line="149" selection-start-column="32" selection-end-line="149" selection-end-column="32" />
+            <state relative-caret-position="188">
+              <caret line="172" column="20" selection-start-line="172" selection-start-column="20" selection-end-line="172" selection-end-column="20" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#4244#4644#0" expanded="true" />
@@ -477,7 +475,7 @@
       <workItem from="1527417554866" duration="521000" />
       <workItem from="1527596919233" duration="10859000" />
       <workItem from="1527733628009" duration="822000" />
-      <workItem from="1527735612259" duration="2892000" />
+      <workItem from="1527735612259" duration="3131000" />
     </task>
     <task id="LOCAL-00001" summary="Fix bug">
       <created>1527045869774</created>
@@ -500,11 +498,18 @@
       <option name="project" value="LOCAL" />
       <updated>1527690021511</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Check if file size is illegal">
+      <created>1527739094272</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1527739094273</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="111761000" />
+    <option name="totallyTimeSpent" value="112000000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -592,7 +597,8 @@
     <MESSAGE value="Fix bug in preview" />
     <MESSAGE value="Add upload status" />
     <MESSAGE value="readme" />
-    <option name="LAST_COMMIT_MESSAGE" value="readme" />
+    <MESSAGE value="Check if file size is illegal" />
+    <option name="LAST_COMMIT_MESSAGE" value="Check if file size is illegal" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -600,13 +606,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/indi/ruiyangding/smmstool/Controller.java</url>
-          <line>200</line>
+          <line>195</line>
           <properties />
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/indi/ruiyangding/smmstool/Controller.java</url>
-          <line>205</line>
+          <line>200</line>
           <properties />
           <option name="timeStamp" value="34" />
         </line-breakpoint>
@@ -1077,8 +1083,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/indi/ruiyangding/smmstool/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="530">
-          <caret line="149" column="32" selection-start-line="149" selection-start-column="32" selection-end-line="149" selection-end-column="32" />
+        <state relative-caret-position="188">
+          <caret line="172" column="20" selection-start-line="172" selection-start-column="20" selection-end-line="172" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#4244#4644#0" expanded="true" />
