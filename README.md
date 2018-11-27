@@ -15,7 +15,7 @@ Click images in the table to see details
 
 Feature
 
-* Generate Markdown and Html.
+* Generate Markdown and Html code for inserting the image.
 * Image preview
 * Support multi image upload in concurrency way
 * Automaticall put url in your clipboard(Only if upload single image in one time, if multi image are being uploaded in same time, the tool will only put the last image's url in the clipboard)
