@@ -13,7 +13,7 @@ Click images in the table to see details
 
 ![WX20180530-222103@2x](https://github.com/JohnDing1995/SmmsDragNDrop/blob/master/img/WX20180530-222103%402x.png)
 
-Feature
+## Feature
 
 * Generate Markdown and Html code for inserting the image.
 * Image preview
